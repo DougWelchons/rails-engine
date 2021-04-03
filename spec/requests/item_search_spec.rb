@@ -11,7 +11,7 @@ RSpec.describe "item find_one API end point" do
     parsed = JSON.parse(response.body, symbolize_names: true)
 
     expect(response.status).to eq(200)
-    expect(parsed[:data].count).to eq(1)
+    expect(parsed[:data].keys).to eq([:id, :type, :attributes])
   end
 
   it "returns one item based on a minimum value" do
@@ -20,7 +20,7 @@ RSpec.describe "item find_one API end point" do
     parsed = JSON.parse(response.body, symbolize_names: true)
 
     expect(response.status).to eq(200)
-    expect(parsed[:data].count).to eq(1)
+    expect(parsed[:data].keys).to eq([:id, :type, :attributes])
   end
 
   it "returns one item based on a maximum value" do
@@ -29,7 +29,7 @@ RSpec.describe "item find_one API end point" do
     parsed = JSON.parse(response.body, symbolize_names: true)
 
     expect(response.status).to eq(200)
-    expect(parsed[:data].count).to eq(1)
+    expect(parsed[:data].keys).to eq([:id, :type, :attributes])
   end
 
   it "returns one item when both a min and max value are given" do
@@ -39,8 +39,14 @@ RSpec.describe "item find_one API end point" do
     parsed = JSON.parse(response.body, symbolize_names: true)
 
     expect(response.status).to eq(200)
-    expect(parsed[:data].count).to eq(1)
+    expect(parsed[:data].keys).to eq([:id, :type, :attributes])
   end
 
-  it "return an error if both a name and price range are give"
+  it "return an error if both a name and price range are give" do
+    max = "1000.50"
+    name = "name"
+    get "/api/v1/items/find?max_price=#{max}&name=#{name}"
+
+    expect(response.status).to eq(400)
+  end
 end
