@@ -2,9 +2,8 @@ require 'rails_helper'
 
 RSpec.describe "all merchants API end point" do
   before :each do
-    100.times do
-      create(:merchant)
-    end
+    # ActiveRecord::Base.connection.reset_pk_sequence!('merchants')
+      create_list(:merchant, 100)
   end
 
   it "returens merchants equal to the per_page value" do
@@ -14,6 +13,8 @@ RSpec.describe "all merchants API end point" do
 
     expect(response.status).to eq(200)
     expect(parsed[:data].count).to eq(per_page)
+    expect(parsed[:data].first[:id]).to eq("201")
+    expect(parsed[:data].last[:id]).to eq("210")
   end
 
   it "returens 20 merchants by default" do
