@@ -92,6 +92,17 @@ RSpec.describe "all items API end point", type: :request do
       expect(json[:data].last[:id].to_i).to eq(@items[per_page - 1].id)
     end
 
+    it "returns 20 items per page if quary param for per_page is less then 1" do
+      per_page = -1
+      page = 1
+      get "/api/v1/items?per_page=#{per_page}&page=#{page}"
+
+      expect(response.status).to eq(200)
+      expect(json[:data].count).to eq(20)
+      expect(json[:data].first[:id].to_i).to eq(@items.first.id)
+      expect(json[:data].last[:id].to_i).to eq(@items[19].id)
+    end
+
     it "returns the default if quary params are blank" do
       get "/api/v1/items?per_page=&page="
 
