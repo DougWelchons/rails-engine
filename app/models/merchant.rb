@@ -5,8 +5,21 @@ class Merchant < ApplicationRecord
   has_many :customers, through: :invoices
   has_many :transactions, through: :invoices
 
+  def self.merchants_by_revenue(limit)
+     joins(:transactions)
+    .where('transactions.result = ?', 'success')
+    .select('merchants.id, merchants.name, sum(invoice_items.quantity * invoice_items.unit_price) as revenue')
+    .group(:id)
+    .order(revenue: :desc)
+    .limit(limit)
+  end
 
-  def self.partial_all_maerchants(per_page, page)
-    require "pry"; binding.pry
+  def self.merchants_by_items_sold(limit = 5)
+     joins(:transactions)
+    .where('transactions.result = ?', 'success')
+    .select('merchants.id, merchants.name, sum(invoice_items.quantity) AS item_count')
+    .group(:id)
+    .order(item_count: :desc)
+    .limit(limit)
   end
 end
