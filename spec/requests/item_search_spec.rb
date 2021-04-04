@@ -2,11 +2,16 @@ require 'rails_helper'
 
 RSpec.describe "item find_one API end point" do
   before :each do
-      create_list(:item, 100)
+    create(:item, name: "item", unit_price: 1000.99)
+    create(:item, name: "thing", unit_price: 10.99)
+    create(:item, name: "stuff-n-things", unit_price: 125.99)
+    create(:item, name: "another item", unit_price: 100.99)
+    create(:item, name: "more item", unit_price: 100.99)
+    create(:item, name: "item-that-does things", unit_price: 100.99)
   end
 
   it "returns one item with a matching name" do
-    name = "1"
+    name = "things"
     get "/api/v1/items/find?name=#{name}"
     parsed = JSON.parse(response.body, symbolize_names: true)
 
