@@ -1,29 +1,3 @@
-# require 'rails_helper'
-#
-# RSpec.describe "all merchants API end point" do
-#   before :each do
-#     # ActiveRecord::Base.connection.reset_pk_sequence!('merchants')
-#       create_list(:merchant, 100)
-#   end
-#
-#   it "returens merchants equal to the per_page value" do
-#     per_page = 10
-#     get "/api/v1/merchants?per_page=#{per_page}"
-#     parsed = JSON.parse(response.body, symbolize_names: true)
-#
-#     expect(response.status).to eq(200)
-#     expect(parsed[:data].count).to eq(per_page)
-#   end
-#
-#   it "returens 20 merchants by default" do
-#     get "/api/v1/merchants"
-#     parsed = JSON.parse(response.body, symbolize_names: true)
-#
-#     expect(response.status).to eq(200)
-#     expect(parsed[:data].count).to eq(20)
-#   end
-# end
-
 require 'rails_helper'
 
 RSpec.describe "all merchants API end point", type: :request do
@@ -66,7 +40,7 @@ RSpec.describe "all merchants API end point", type: :request do
     it "returens the next 10 merchants if page 2 & 10 merchants_per_page is requested" do
       per_page = 10
       page = 2
-      get "/api/v1/merchants?per_page=10&page=#{page}"
+      get "/api/v1/merchants?per_page=#{per_page}&page=#{page}"
       parsed = JSON.parse(response.body, symbolize_names: true)
 
       expect(response.status).to eq(200)
@@ -107,7 +81,7 @@ RSpec.describe "all merchants API end point", type: :request do
   end
 
   describe "Sad Path" do
-    it "returns page 1 if quary param for page is less then 1" do
+    it "returns page 1 if query param for page is less then 1" do
       per_page = 10
       page = -1
       get "/api/v1/merchants?per_page=#{per_page}&page=#{page}"
@@ -118,7 +92,7 @@ RSpec.describe "all merchants API end point", type: :request do
       expect(json[:data].last[:id].to_i).to eq(@merchants[per_page - 1].id)
     end
 
-    it "returns 20 merchants per page if quary param for per_page is less then 1" do
+    it "returns 20 merchants per page if query param for per_page is less then 1" do
       per_page = -1
       page = 1
       get "/api/v1/merchants?per_page=#{per_page}&page=#{page}"
@@ -129,7 +103,7 @@ RSpec.describe "all merchants API end point", type: :request do
       expect(json[:data].last[:id].to_i).to eq(@merchants[19].id)
     end
 
-    it "returns the default if quary params are blank" do
+    it "returns the default if query params are blank" do
       get "/api/v1/merchants?per_page=&page="
 
       expect(response.status).to eq(200)

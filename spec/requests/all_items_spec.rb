@@ -40,7 +40,7 @@ RSpec.describe "all items API end point", type: :request do
     it "returens the next 10 items if page 2 & 10 items_per_page is requested" do
       per_page = 10
       page = 2
-      get "/api/v1/items?per_page=10&page=#{page}"
+      get "/api/v1/items?per_page=#{per_page}&page=#{page}"
       parsed = JSON.parse(response.body, symbolize_names: true)
 
       expect(response.status).to eq(200)
@@ -81,7 +81,7 @@ RSpec.describe "all items API end point", type: :request do
   end
 
   describe "Sad Path" do
-    it "returns page 1 if quary param for page is less then 1" do
+    it "returns page 1 if query param for page is less then 1" do
       per_page = 10
       page = -1
       get "/api/v1/items?per_page=#{per_page}&page=#{page}"
@@ -92,7 +92,7 @@ RSpec.describe "all items API end point", type: :request do
       expect(json[:data].last[:id].to_i).to eq(@items[per_page - 1].id)
     end
 
-    it "returns 20 items per page if quary param for per_page is less then 1" do
+    it "returns 20 items per page if query param for per_page is less then 1" do
       per_page = -1
       page = 1
       get "/api/v1/items?per_page=#{per_page}&page=#{page}"
@@ -103,7 +103,7 @@ RSpec.describe "all items API end point", type: :request do
       expect(json[:data].last[:id].to_i).to eq(@items[19].id)
     end
 
-    it "returns the default if quary params are blank" do
+    it "returns the default if query params are blank" do
       get "/api/v1/items?per_page=&page="
 
       expect(response.status).to eq(200)
