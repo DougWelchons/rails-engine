@@ -13,8 +13,6 @@ RSpec.describe "all merchants API end point" do
 
     expect(response.status).to eq(200)
     expect(parsed[:data].count).to eq(per_page)
-    expect(parsed[:data].first[:id]).to eq("201")
-    expect(parsed[:data].last[:id]).to eq("210")
   end
 
   it "returens 20 merchants by default" do

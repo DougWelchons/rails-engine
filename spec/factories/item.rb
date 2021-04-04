@@ -1,9 +1,5 @@
 FactoryBot.define do
   factory :item do
-    sequence :id do |n|
-      "#{n}"
-    end
-
     sequence :name do |n|
       "Item#{n}"
     end
