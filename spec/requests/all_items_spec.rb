@@ -40,7 +40,7 @@ RSpec.describe "all items API end point", type: :request do
     it "returens the next 10 items if page 2 & 10 items_per_page is requested" do
       per_page = 10
       page = 2
-      get "/api/v1/items?per_page=10&page=#{page}"
+      get "/api/v1/items?per_page=#{per_page}&page=#{page}"
       parsed = JSON.parse(response.body, symbolize_names: true)
 
       expect(response.status).to eq(200)
