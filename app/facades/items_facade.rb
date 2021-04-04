@@ -8,6 +8,10 @@ class ItemsFacade
     Item.offset(offset).limit(per_page)
   end
 
+  def self.by_revenue(limit)
+    Item.by_revenue(limit)
+  end
+
   def self.valid_param?(param)
     return true if (param && param !="") && param.to_i >= 1
     false
