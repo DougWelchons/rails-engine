@@ -11,12 +11,12 @@ class Api::V1::MerchantsController < ApplicationController
     render json: MerchantSerializer.new(Merchant.find(params[:id]))
   end
 
-  def most_revenue
+  def by_revenue
     merchants = Merchant.merchants_by_revenue(params[:quantity])
     render json: MerchantNameRevenueSerializer.new(merchants)
   end
 
-  def most_items
+  def by_items
     if params[:quantity]
       merchants = Merchant.merchants_by_items_sold(params[:quantity])
       render json: MerchantNameItemsSerializer.new(merchants)

@@ -5,4 +5,10 @@ class Api::V1::ItemsController < ApplicationController
 
     render json: ItemSerializer.new(items)
   end
+
+  def by_revenue
+    item = Item.by_revenue(params[:quantity])
+
+    render json: ItemRevenueSerializer.new(item)
+  end
 end
