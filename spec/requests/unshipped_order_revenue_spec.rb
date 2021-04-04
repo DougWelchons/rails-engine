@@ -9,6 +9,6 @@ RSpec.describe "Unshiped Revenue", type: :request do
     get "/api/v1/revenue/unshipped"
 
     expect(response.status).to eq(200)
-    expect(json[:data].count).to eq(10)
+    expect(json[:data].count).to eq(4)
   end
 end
