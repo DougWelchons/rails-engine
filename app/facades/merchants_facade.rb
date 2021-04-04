@@ -12,6 +12,10 @@ class MerchantsFacade
     Merchant.by_revenue(limit)
   end
 
+  def self.by_items_sold(limit)
+    Merchant.by_items_sold(limit)
+  end
+
   def self.valid_param?(param)
     return true if (param && param !="") && param.to_i >= 1
     false
