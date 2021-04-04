@@ -71,11 +71,12 @@ testing
 
 - merchants_by_revenue endpoint
   - Happy path testing includes:
-    - the endpoint returns the top 5 merchants sorted by revenue as the default
     - the endpoint returns merchants equal to the quantity query params if provided
     - the endpoint returns all merchants if the quantity query params is larger then the number of merchants
   - Edge case testing includes:
     - the endpoint does not includes merchants that do not have any successful transactions
   - Sad path testing includes:
-    - the endpoint uses the default quantity if the quantity query param is less then 1
-    - the endpoint uses the default quantity if the quantity query param is blank
+    - the endpoint returns a 400 response if the quantity query param is less then 1
+    - the endpoint returns a 400 response if the quantity query param is a string
+    - the endpoint returns a 400 response if the quantity query param is blank
+    - the endpoint returns a 400 response if the quantity query param is not provided
