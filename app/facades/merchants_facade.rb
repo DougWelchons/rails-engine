@@ -8,8 +8,13 @@ class MerchantsFacade
     Merchant.offset(offset).limit(per_page)
   end
 
+  def self.by_revenue(limit)
+    Merchant.by_revenue(limit)
+  end
+
   def self.valid_param?(param)
     return true if (param && param !="") && param.to_i >= 1
     false
   end
+
 end
