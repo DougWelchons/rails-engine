@@ -14,7 +14,7 @@ class Merchant < ApplicationRecord
     .limit(limit)
   end
 
-  def self.merchants_by_items_sold(limit = 5)
+  def self.by_items_sold(limit = 5)
      joins(:transactions)
     .where('transactions.result = ?', 'success')
     .select('merchants.id, merchants.name, sum(invoice_items.quantity) AS item_count')

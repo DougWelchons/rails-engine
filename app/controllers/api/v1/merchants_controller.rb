@@ -21,8 +21,8 @@ class Api::V1::MerchantsController < ApplicationController
   end
 
   def by_items
-    if params[:quantity]
-      merchants = Merchant.merchants_by_items_sold(params[:quantity])
+    if MerchantsFacade.valid_param?(params[:quantity])
+      merchants = MerchantsFacade.by_items_sold(params[:quantity])
       render json: MerchantNameItemsSerializer.new(merchants)
     else
       render json: {error: {}}, status: :bad_request
