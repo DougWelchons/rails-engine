@@ -12,7 +12,7 @@ class Api::V1::MerchantsController < ApplicationController
   end
 
   def by_revenue
-    merchants = Merchant.merchants_by_revenue(params[:quantity])
+    merchants = MerchantsFacade.by_revenue(params[:quantity])
     render json: MerchantNameRevenueSerializer.new(merchants)
   end
 
