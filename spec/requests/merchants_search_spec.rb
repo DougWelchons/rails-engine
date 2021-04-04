@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe "merchants find_all API end point", type: :request do
   before :each do
-    create_test_db
+    seed_test_db
   end
 
   it "returns all merchants who match the search peramiters" do

@@ -2,9 +2,7 @@ require 'rails_helper'
 
 RSpec.describe "all items API end point" do
   before :each do
-    100.times do
-      create(:item)
-    end
+    create_list(:item, 100)
   end
 
   it "returens items equal to the per_page value" do
