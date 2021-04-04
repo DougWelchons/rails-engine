@@ -81,10 +81,24 @@ RSpec.describe "item find_one API end point", type: :request do
       end
     end
     describe "Sad Path" do
-      it "return a400 response if both a name and price query param are give" do
+      it "returns a 400 response if both a name and price query param are give" do
         max = 1000.50
         name = "name"
         get "/api/v1/items/find?max_price=#{max}&name=#{name}"
+
+        expect(response.status).to eq(400)
+      end
+
+      it "returns a 400 response if the max price query param is less then 0" do
+        max = -1
+        get "/api/v1/items/find?max_price=#{max}"
+
+        expect(response.status).to eq(400)
+      end
+
+      it "returns a 400 response if the min price query param is less then 0" do
+        min = -1
+        get "/api/v1/items/find?min_price=#{min}"
 
         expect(response.status).to eq(400)
       end
