@@ -9,7 +9,6 @@ class MerchantsFacade
   end
 
   def self.by_revenue(limit)
-    limit = 5 unless valid_param?(limit)
     Merchant.by_revenue(limit)
   end
 

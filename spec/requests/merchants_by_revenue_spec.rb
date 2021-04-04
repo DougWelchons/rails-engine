@@ -6,18 +6,6 @@ RSpec.describe "merchants by revenue", type: :request do
   end
 
   describe "Happy Path" do
-    it "returns the top 5 merchants sorted by revenue as the default" do
-      get "/api/v1/revenue/merchants"
-
-      expect(response.status).to eq(200)
-      expect(json[:data].count).to eq(5)
-      expect(json[:data].first[:attributes][:name]).to eq("stand by")
-      expect(json[:data].second[:attributes][:name]).to eq("try again")
-      expect(json[:data].third[:attributes][:name]).to eq("Merchants 4 me")
-      expect(json[:data].fourth[:attributes][:name]).to eq("the merchants for all")
-      expect(json[:data].fifth[:attributes][:name]).to eq("the merchants guild")
-    end
-
     it "returns merchants equal to the quantity query params sorted by revenue" do
       qty = 2
       get "/api/v1/revenue/merchants?quantity=#{qty}"
@@ -50,19 +38,30 @@ RSpec.describe "merchants by revenue", type: :request do
   end
 
   describe "Sad Path" do
-    it "uses the default quantity if the quantity query param is less then 1" do
+    it "returns a 400 response if the quantity query param is less then 1" do
       qty = -1
       get "/api/v1/revenue/merchants?quantity=#{qty}"
 
-      expect(response.status).to eq(200)
-      expect(json[:data].count).to eq(5)
+      expect(response.status).to eq(400)
     end
 
-    it "uses the default quantity if the quantity query param is blank" do
+    it "returns a 400 response if the quantity query param is a string" do
+      qty = "string"
+      get "/api/v1/revenue/merchants?quantity=#{qty}"
+
+      expect(response.status).to eq(400)
+    end
+
+    it "returns a 400 response if the quantity query param is blank" do
       get "/api/v1/revenue/merchants?quantity="
 
-      expect(response.status).to eq(200)
-      expect(json[:data].count).to eq(5)
+      expect(response.status).to eq(400)
+    end
+
+    it "returns a 400 response if the quantity query param is not provided" do
+      get "/api/v1/revenue/merchants"
+
+      expect(response.status).to eq(400)
     end
   end
 end

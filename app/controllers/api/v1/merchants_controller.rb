@@ -12,8 +12,12 @@ class Api::V1::MerchantsController < ApplicationController
   end
 
   def by_revenue
-    merchants = MerchantsFacade.by_revenue(params[:quantity])
-    render json: MerchantNameRevenueSerializer.new(merchants)
+    if MerchantsFacade.valid_param?(params[:quantity])
+      merchants = MerchantsFacade.by_revenue(params[:quantity])
+      render json: MerchantNameRevenueSerializer.new(merchants)
+    else
+      render json: {error: {}}, status: :bad_request
+    end
   end
 
   def by_items
@@ -21,7 +25,7 @@ class Api::V1::MerchantsController < ApplicationController
       merchants = Merchant.merchants_by_items_sold(params[:quantity])
       render json: MerchantNameItemsSerializer.new(merchants)
     else
-      render json: {error: {}}, status: 400
+      render json: {error: {}}, status: :bad_request
     end
   end
 end

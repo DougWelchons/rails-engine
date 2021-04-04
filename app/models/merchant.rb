@@ -6,7 +6,6 @@ class Merchant < ApplicationRecord
   has_many :transactions, through: :invoices
 
   def self.by_revenue(limit)
-    limit = 5 unless limit
      joins(:transactions)
     .where('transactions.result = ?', 'success')
     .select('merchants.id, merchants.name, sum(invoice_items.quantity * invoice_items.unit_price) as revenue')
