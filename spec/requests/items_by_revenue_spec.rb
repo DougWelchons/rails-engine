@@ -6,7 +6,7 @@ RSpec.describe "Items By Revenue", type: :request do
   end
 
   it "returns the top 10 items by revenue as the default" do
-    get "/api/v1/revenue/items?quantity="
+    get "/api/v1/revenue/items"
 
     expect(response.status).to eq(200)
     expect(json[:data].count).to eq(10)

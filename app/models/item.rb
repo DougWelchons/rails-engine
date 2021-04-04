@@ -5,13 +5,6 @@ class Item < ApplicationRecord
   has_many :customers, through: :invoices
   has_many :transactions, through: :invoices
 
-  def self.unshiped_potential_revenue
-     joins(:invoices)
-    .where('invoices.status = ?', 'packaged')
-    .select('items.id, sum(invoice_items.quantity * invoice_items.unit_price) as potential_revenue')
-    .group(:id)
-  end
-
   def self.by_revenue(limit)
     limit = 10 unless limit
      joins(:transactions)

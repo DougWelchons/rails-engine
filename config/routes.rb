@@ -8,6 +8,7 @@ Rails.application.routes.draw do
       resources :items, only: [:index]
       get "/items/find", to: "items/search#show"
       get "/revenue/items", to: "items#by_revenue"
+      get "/revenue/unshipped", to: "invoices#unshipped_revenue"
     end
   end
 end
