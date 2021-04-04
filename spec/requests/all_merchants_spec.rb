@@ -1,25 +1,141 @@
+# require 'rails_helper'
+#
+# RSpec.describe "all merchants API end point" do
+#   before :each do
+#     # ActiveRecord::Base.connection.reset_pk_sequence!('merchants')
+#       create_list(:merchant, 100)
+#   end
+#
+#   it "returens merchants equal to the per_page value" do
+#     per_page = 10
+#     get "/api/v1/merchants?per_page=#{per_page}"
+#     parsed = JSON.parse(response.body, symbolize_names: true)
+#
+#     expect(response.status).to eq(200)
+#     expect(parsed[:data].count).to eq(per_page)
+#   end
+#
+#   it "returens 20 merchants by default" do
+#     get "/api/v1/merchants"
+#     parsed = JSON.parse(response.body, symbolize_names: true)
+#
+#     expect(response.status).to eq(200)
+#     expect(parsed[:data].count).to eq(20)
+#   end
+# end
+
 require 'rails_helper'
 
-RSpec.describe "all merchants API end point" do
+RSpec.describe "all merchants API end point", type: :request do
   before :each do
-    # ActiveRecord::Base.connection.reset_pk_sequence!('merchants')
-      create_list(:merchant, 100)
+    @merchants = create_list(:merchant, 100)
   end
 
-  it "returens merchants equal to the per_page value" do
-    per_page = 10
-    get "/api/v1/merchants?per_page=#{per_page}"
-    parsed = JSON.parse(response.body, symbolize_names: true)
+  describe "Happy Path" do
+    it "returens merchants equal to the per_page value" do
+      per_page = 10
+      get "/api/v1/merchants?per_page=#{per_page}"
 
-    expect(response.status).to eq(200)
-    expect(parsed[:data].count).to eq(per_page)
+      expect(response.status).to eq(200)
+      expect(json[:data].count).to eq(per_page)
+      expect(json[:data].first[:id].to_i).to eq(@merchants.first.id)
+      expect(json[:data].last[:id].to_i).to eq(@merchants[per_page - 1].id)
+    end
+
+    it "returens 20 merchants by default" do
+      get "/api/v1/merchants"
+      parsed = JSON.parse(response.body, symbolize_names: true)
+
+      expect(response.status).to eq(200)
+      expect(parsed[:data].count).to eq(20)
+      expect(json[:data].first[:id].to_i).to eq(@merchants.first.id)
+      expect(json[:data].last[:id].to_i).to eq(@merchants[19].id)
+    end
+
+    it "returens the next 20 merchants if page 2 is requested" do
+      page = 2
+      get "/api/v1/merchants?page=#{page}"
+      parsed = JSON.parse(response.body, symbolize_names: true)
+
+      expect(response.status).to eq(200)
+      expect(parsed[:data].count).to eq(20)
+      expect(json[:data].first[:id].to_i).to eq(@merchants[20].id)
+      expect(json[:data].last[:id].to_i).to eq(@merchants[39].id)
+    end
+
+    it "returens the next 10 merchants if page 2 & 10 merchants_per_page is requested" do
+      per_page = 10
+      page = 2
+      get "/api/v1/merchants?per_page=10&page=#{page}"
+      parsed = JSON.parse(response.body, symbolize_names: true)
+
+      expect(response.status).to eq(200)
+      expect(parsed[:data].count).to eq(10)
+      expect(json[:data].first[:id].to_i).to eq(@merchants[10].id)
+      expect(json[:data].last[:id].to_i).to eq(@merchants[19].id)
+    end
   end
 
-  it "returens 20 merchants by default" do
-    get "/api/v1/merchants"
-    parsed = JSON.parse(response.body, symbolize_names: true)
+  describe "Edge Cases" do
+    it "returns all merchants if per page is larger then the number of merchants" do
+      per_page = 200
+      get "/api/v1/merchants?per_page=#{per_page}"
 
-    expect(response.status).to eq(200)
-    expect(parsed[:data].count).to eq(20)
+      expect(response.status).to eq(200)
+      expect(json[:data].count).to eq(100)
+    end
+
+    it "returns all remaing merchants if page_count is the last page" do
+      per_page = 30
+      page = 4
+      get "/api/v1/merchants?per_page=#{per_page}&page=#{page}"
+
+      expect(response.status).to eq(200)
+      expect(json[:data].count).to eq(10)
+      expect(json[:data].first[:id].to_i).to eq(@merchants[90].id)
+      expect(json[:data].last[:id].to_i).to eq(@merchants[99].id)
+    end
+
+    it "returns an no objects if page count is too high" do
+      per_page = 125
+      page = 2
+      get "/api/v1/merchants?per_page=#{per_page}&page=#{page}"
+
+      expect(response.status).to eq(200)
+      expect(json[:data].count).to eq(0)
+    end
+  end
+
+  describe "Sad Path" do
+    it "returns page 1 if quary param for page is less then 1" do
+      per_page = 10
+      page = -1
+      get "/api/v1/merchants?per_page=#{per_page}&page=#{page}"
+
+      expect(response.status).to eq(200)
+      expect(json[:data].count).to eq(per_page)
+      expect(json[:data].first[:id].to_i).to eq(@merchants.first.id)
+      expect(json[:data].last[:id].to_i).to eq(@merchants[per_page - 1].id)
+    end
+
+    it "returns 20 merchants per page if quary param for per_page is less then 1" do
+      per_page = -1
+      page = 1
+      get "/api/v1/merchants?per_page=#{per_page}&page=#{page}"
+
+      expect(response.status).to eq(200)
+      expect(json[:data].count).to eq(20)
+      expect(json[:data].first[:id].to_i).to eq(@merchants.first.id)
+      expect(json[:data].last[:id].to_i).to eq(@merchants[19].id)
+    end
+
+    it "returns the default if quary params are blank" do
+      get "/api/v1/merchants?per_page=&page="
+
+      expect(response.status).to eq(200)
+      expect(json[:data].count).to eq(20)
+      expect(json[:data].first[:id].to_i).to eq(@merchants.first.id)
+      expect(json[:data].last[:id].to_i).to eq(@merchants[19].id)
+    end
   end
 end

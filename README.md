@@ -24,7 +24,7 @@ Things you may want to cover:
 * ...
 
 testing
-- all_items endpoint
+- all_items and all_merchants endpoints
   - happy path testing includes:
     - default params are page = 1 and per_page = 20
     - optional params work properly individually
