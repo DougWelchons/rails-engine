@@ -64,6 +64,7 @@ RSpec.describe "item find_one API end point", type: :request do
         expect(response.status).to eq(200)
         expect(json[:data].count).to eq(0)
       end
+
       it "returns no item if the maximum value is less then all items" do
         max = 0.10
         get "/api/v1/items/find?max_price=#{max}"
@@ -71,6 +72,7 @@ RSpec.describe "item find_one API end point", type: :request do
         expect(response.status).to eq(200)
         expect(json[:data].count).to eq(0)
       end
+
       it "returns no item if the maximum value is less then the minimum value" do
         min = 25
         max = 10

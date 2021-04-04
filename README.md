@@ -51,3 +51,8 @@ testing
   - Sad path testing includes:
     - the endpoint returns a 400 response if both a name and price query param are give
     - the endpoint returns a 400 response if min max price query params are less then 0
+
+- find_merchants (search) endpoint
+  - Happy path testing includes:
+    - the endpoint returns all merchants who match the name search params
+    - the endpoint returns no objects if no merchants match the name search params
