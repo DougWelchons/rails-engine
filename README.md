@@ -5,7 +5,19 @@ application up and running.
 
 Things you may want to cover:
 
-* Ruby version
+this project was built with:
+* Ruby version 2.5.3
+* Rails version 5.2.5
+this project was tested with:
+* RSpec version 3.10
+  - rspec-core 3.10.1
+  - rspec-expectations 3.10.1
+  - rspec-mocks 3.10.2
+  - rspec-rails 5.0.1
+  - rspec-support 3.10.2
+and also makes use of the following note worth gems for testing
+ * Capibara version
+ * FactoryBot version
 
 * System dependencies
 
@@ -56,3 +68,14 @@ testing
   - Happy path testing includes:
     - the endpoint returns all merchants who match the name search params
     - the endpoint returns no objects if no merchants match the name search params
+
+- merchants_by_revenue endpoint
+  - Happy path testing includes:
+    - the endpoint returns the top 5 merchants sorted by revenue as the default
+    - the endpoint returns merchants equal to the quantity query params if provided
+    - the endpoint returns all merchants if the quantity query params is larger then the number of merchants
+  - Edge case testing includes:
+    - the endpoint does not includes merchants that do not have any successful transactions
+  - Sad path testing includes:
+    - the endpoint uses the default quantity if the quantity query param is less then 1
+    - the endpoint uses the default quantity if the quantity query param is blank
