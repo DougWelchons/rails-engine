@@ -14,7 +14,7 @@ RSpec.describe Merchant, type: :model do
       seed_test_db
     end
     describe ".by_revenue" do
-      it "it will return merchants eqqual to the limit" do
+      it "it will return merchants equal to the limit" do
         limit = 2
         merchants = Merchant.by_revenue(limit)
 
@@ -23,7 +23,7 @@ RSpec.describe Merchant, type: :model do
         expect(merchants[1].name).to eq("try again")
       end
 
-      it "returns all merchants with successful transactions if limit is greater than the numbewr of results" do
+      it "returns all merchants with successful transactions if limit is greater than the number of results" do
         limit = 50
         merchants = Merchant.by_revenue(limit)
 
@@ -34,6 +34,30 @@ RSpec.describe Merchant, type: :model do
         expect(merchants[3].name).to eq("the merchants for all")
         expect(merchants[4].name).to eq("the merchants guild")
         expect(merchants[5].name).to eq("one more")
+      end
+    end
+
+    describe ".by_items_sold" do
+      it "it will return merchants equal to the limit" do
+        limit = 2
+        merchants = Merchant.by_items_sold(limit)
+
+        expect(merchants.length).to eq(limit)
+        expect(merchants[0].name).to eq("try again")
+        expect(merchants[1].name).to eq("one more")
+      end
+
+      it "returns all merchants with successful transactions if limit is greater than the number of results" do
+        limit = 50
+        merchants = Merchant.by_items_sold(limit)
+
+        expect(merchants.length).to eq(6)
+        expect(merchants[0].name).to eq("try again")
+        expect(merchants[1].name).to eq("one more")
+        expect(merchants[2].name).to eq("stand by")
+        expect(merchants[3].name).to eq("the merchants guild")
+        expect(merchants[4].name).to eq("the merchants for all")
+        expect(merchants[5].name).to eq("Merchants 4 me")
       end
     end
   end

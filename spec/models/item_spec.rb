@@ -29,7 +29,7 @@ RSpec.describe Item, type: :model do
         expect(items[9].name).to eq("Item 16")
       end
 
-      it "if a limit is provided, it will return items eqqual to the limit" do
+      it "if a limit is provided, it will return items equal to the limit" do
         limit = 4
         items = Item.by_revenue(limit)
         expect(items.length).to eq(limit)
@@ -39,7 +39,7 @@ RSpec.describe Item, type: :model do
         expect(items[3].name).to eq("Item 7")
       end
 
-      it "returns all items with successful transactions if limit is greater than the numbewr of results" do
+      it "returns all items with successful transactions if limit is greater than the number of results" do
         limit = 50
         items = Item.by_revenue(limit)
         expect(items.length).to eq(11)
