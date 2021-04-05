@@ -5,12 +5,14 @@
 
 Rails engine is designed to simulate the backend portion of a internet sales platform,
 providing to the front end program (not a part of this project), API endpoints to relevant data in the database.
-<div style="display: inline-block; margin: auto">
+
+<div style="display: inline-block">
 This project was built with:<br>
 * Ruby version 2.5.3<br>
 * Rails version 5.2.5
 </div>
-<div style="display: inline-block; margin: auto">
+
+<div style="display: inline-block">
 This project was tested with:<br>
 * RSpec version 3.10
 </div>
