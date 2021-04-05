@@ -8,11 +8,57 @@ RSpec.describe Merchant, type: :model do
     it { should have_many(:invoice_items).through(:items) }
     it { should have_many(:items) }
   end
-  #
-  # describe "validations" do
-  #   it { should validate_presence_of :quantity }
-  #   it { should validate_numericality_of :quantity }
-  #   it { should validate_presence_of :unit_price }
-  #   it { should validate_numericality_of :unit_price }
-  # end
+
+  describe "class methods" do
+    before :each do
+      seed_test_db
+    end
+    describe ".by_revenue" do
+      it "it will return merchants equal to the limit" do
+        limit = 2
+        merchants = Merchant.by_revenue(limit)
+
+        expect(merchants.length).to eq(limit)
+        expect(merchants[0].name).to eq("stand by")
+        expect(merchants[1].name).to eq("try again")
+      end
+
+      it "returns all merchants with successful transactions if limit is greater than the number of results" do
+        limit = 50
+        merchants = Merchant.by_revenue(limit)
+
+        expect(merchants.length).to eq(6)
+        expect(merchants[0].name).to eq("stand by")
+        expect(merchants[1].name).to eq("try again")
+        expect(merchants[2].name).to eq("Merchants 4 me")
+        expect(merchants[3].name).to eq("the merchants for all")
+        expect(merchants[4].name).to eq("the merchants guild")
+        expect(merchants[5].name).to eq("one more")
+      end
+    end
+
+    describe ".by_items_sold" do
+      it "it will return merchants equal to the limit" do
+        limit = 2
+        merchants = Merchant.by_items_sold(limit)
+
+        expect(merchants.length).to eq(limit)
+        expect(merchants[0].name).to eq("try again")
+        expect(merchants[1].name).to eq("one more")
+      end
+
+      it "returns all merchants with successful transactions if limit is greater than the number of results" do
+        limit = 50
+        merchants = Merchant.by_items_sold(limit)
+
+        expect(merchants.length).to eq(6)
+        expect(merchants[0].name).to eq("try again")
+        expect(merchants[1].name).to eq("one more")
+        expect(merchants[2].name).to eq("stand by")
+        expect(merchants[3].name).to eq("the merchants guild")
+        expect(merchants[4].name).to eq("the merchants for all")
+        expect(merchants[5].name).to eq("Merchants 4 me")
+      end
+    end
+  end
 end

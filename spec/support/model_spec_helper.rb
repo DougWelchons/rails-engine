@@ -1,9 +1,4 @@
-module RequestRailsHelper
-
-  def json
-    info ||= JSON.parse(response.body, symbolize_names: true)
-  end
-
+module ModelRailsHelper
   def seed_test_db
     @merchant1 = create(:merchant, name: "another one")
     @merchant2 = create(:merchant, name: "this other thing")

@@ -63,6 +63,7 @@ RSpec.configure do |config|
   config.filter_rails_from_backtrace!
 
   config.include RequestRailsHelper, type: :request
+  config.include ModelRailsHelper, type: :model
   # arbitrary gems may also be filtered via:
   # config.filter_gems_from_backtrace("gem name")
   Shoulda::Matchers.configure do |config|
