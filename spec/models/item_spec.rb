@@ -15,7 +15,7 @@ RSpec.describe Item, type: :model do
     end
     describe ".by_revenue" do
       it "returns 10 items by default sorted by revenue" do
-        items = Item.by_revenue(nil)
+        items = Item.by_revenue(nil, "items")
         expect(items.length).to eq(10)
         expect(items[0].name).to eq("Item 11")
         expect(items[1].name).to eq("Item 18")
@@ -31,7 +31,7 @@ RSpec.describe Item, type: :model do
 
       it "if a limit is provided, it will return items equal to the limit" do
         limit = 4
-        items = Item.by_revenue(limit)
+        items = Item.by_revenue(limit, "items")
         expect(items.length).to eq(limit)
         expect(items[0].name).to eq("Item 11")
         expect(items[1].name).to eq("Item 18")
@@ -41,7 +41,7 @@ RSpec.describe Item, type: :model do
 
       it "returns all items with successful transactions if limit is greater than the number of results" do
         limit = 50
-        items = Item.by_revenue(limit)
+        items = Item.by_revenue(limit, "items")
         expect(items.length).to eq(11)
         expect(items[0].name).to eq("Item 11")
         expect(items[1].name).to eq("Item 18")
