@@ -104,3 +104,14 @@ testing
     - the endpoint returns a 400 response if the quantity query param is less then 1
     - the endpoint returns a 400 response if the quantity query param is a string
     - the endpoint returns a 400 response if the quantity query param is blank
+
+- unshipped_invoices_by_revenue
+  - Happy path testing includes:
+    - the endpoint returns 10 unshipped invoices ranked by potential revenue as the default
+    - the endpoint returns unshipped invoices equal to the quantity query params if provided
+    - the endpoint returns all of the unshipped invoices if the quantity query params are greater then the number of unshipped invoices
+  - Edge case testing includes:
+  - Sad path testing includes:
+    - - the endpoint returns a 400 response if the quantity query param is less then 1
+    - the endpoint returns a 400 response if the quantity query param is a string
+    - the endpoint returns a 400 response if the quantity query param is blank
