@@ -32,7 +32,7 @@ RSpec.describe Item, type: :model do
       it "if a limit is provided, it will return items eqqual to the limit" do
         limit = 4
         items = Item.by_revenue(limit)
-        expect(items.length).to eq(4)
+        expect(items.length).to eq(limit)
         expect(items[0].name).to eq("Item 11")
         expect(items[1].name).to eq("Item 18")
         expect(items[2].name).to eq("Item 5")
