@@ -27,7 +27,8 @@ this project was tested with:
 * Configuration
 
 * Database creation
-in order to run this program locally you will need to create and seed a local database you can do so with `rails db:{drop,create,migrate,seed}`, or if you prefer to execute the commands manually one at a time, you can use the following
+
+In order to run this program locally you will need to create and seed a local database you can do so with `rails db:{drop,create,migrate,seed}`, or if you prefer to execute the commands manually one at a time, you can use the following
 
 ```
 rails db:drop
