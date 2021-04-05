@@ -47,6 +47,13 @@ module RequestRailsHelper
     @invoice8 = create(:invoice, customer: @customer, merchant: @merchant6, status: "returned")
     @invoice9 = create(:invoice, customer: @customer, merchant: @merchant10, status: "packaged")
     @invoice10 = create(:invoice, customer: @customer, merchant: @merchant10)
+    @invoice11 = create(:invoice, customer: @customer, merchant: @merchant10, status: "packaged")
+    @invoice12 = create(:invoice, customer: @customer, merchant: @merchant10, status: "packaged")
+    @invoice13 = create(:invoice, customer: @customer, merchant: @merchant10, status: "packaged")
+    @invoice14 = create(:invoice, customer: @customer, merchant: @merchant10, status: "packaged")
+    @invoice15 = create(:invoice, customer: @customer, merchant: @merchant10, status: "packaged")
+    @invoice16 = create(:invoice, customer: @customer, merchant: @merchant10, status: "packaged")
+    @invoice17 = create(:invoice, customer: @customer, merchant: @merchant10, status: "packaged")
 
     create(:transaction, invoice: @invoice1, result: "failed")
     create(:transaction, invoice: @invoice1)
@@ -78,5 +85,12 @@ module RequestRailsHelper
     create(:invoice_item, invoice: @invoice9, item: @item12, unit_price: 1, quantity: 101)
     create(:invoice_item, invoice: @invoice10, item: @item12, unit_price: 0.90, quantity: 178)
     create(:invoice_item, invoice: @invoice10, item: @item16, unit_price: 0.09, quantity: 45)
+    create(:invoice_item, invoice: @invoice11, item: @item16, unit_price: 1.50, quantity: 257)
+    create(:invoice_item, invoice: @invoice12, item: @item16, unit_price: 50.00, quantity: 20)
+    create(:invoice_item, invoice: @invoice13, item: @item16, unit_price: 45, quantity: 45)
+    create(:invoice_item, invoice: @invoice14, item: @item16, unit_price: 5, quantity: 24)
+    create(:invoice_item, invoice: @invoice15, item: @item16, unit_price: 8.91, quantity: 19)
+    create(:invoice_item, invoice: @invoice16, item: @item16, unit_price: 250, quantity: 6)
+    create(:invoice_item, invoice: @invoice17, item: @item16, unit_price: 89.02, quantity: 50)
   end
 end
