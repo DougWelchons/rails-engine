@@ -9,7 +9,9 @@ class ItemsFacade
   end
 
   def self.by_revenue(limit)
-    Item.by_revenue(limit)
+    if self.valid_param?(limit) || !limit
+      Item.by_revenue(limit, "items")
+    end
   end
 
   def self.valid_param?(param)

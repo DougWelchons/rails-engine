@@ -9,11 +9,11 @@ class MerchantsFacade
   end
 
   def self.by_revenue(limit)
-    Merchant.by_revenue(limit)
+      Merchant.by_revenue(limit, "merchants") if self.valid_param?(limit)
   end
 
   def self.by_items_sold(limit)
-    Merchant.by_items_sold(limit)
+      Merchant.by_items_sold(limit) if self.valid_param?(limit)
   end
 
   def self.valid_param?(param)

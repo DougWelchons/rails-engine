@@ -11,7 +11,7 @@ class Item::SearchFacade
 
     elsif name
       keyword = "%#{name.downcase}%"
-    Item.where('lower(name) LIKE ?', keyword).order(:name).limit(1)
+      Item.where('lower(name) LIKE ?', keyword).order(:name).limit(1)
     end
   end
 end

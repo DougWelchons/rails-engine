@@ -5,7 +5,7 @@ class Invoice < ApplicationRecord
   has_many :invoice_items
   has_many :items, through: :invoice_items
 
-  def self.unshiped_potential_revenue(limit)
+  def self.unshipped_potential_revenue(limit)
     limit = 10 unless limit
      joins(:invoice_items)
     .where('invoices.status = ?', 'packaged')

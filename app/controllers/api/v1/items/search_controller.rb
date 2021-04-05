@@ -14,4 +14,9 @@ class Api::V1::Items::SearchController < ApplicationController
       end
     end
   end
+
+  def valid_param?(param)
+    return true if (param && param !="") && param.to_i >= 1
+    false
+  end
 end
