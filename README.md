@@ -19,8 +19,8 @@ this project was tested with:
 - [Testing](#testing)
   - [Running tests](#running-tests)
   - [Tests for each endpoint](#tests-for-each-endpont)
-    - [All_items](#all-items)
-    - [All_merchants](#all-merchants)
+    - [All_items](#all_items-endpoints)
+    - [All_merchants](#all_merchants-endpoints)
 
 
 
