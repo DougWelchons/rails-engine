@@ -37,7 +37,7 @@ RSpec.describe "Items by revenue", type: :request do
       get "/api/v1/revenue/items?quantity=#{qty}"
 
       expect(response.status).to eq(200)
-      expect(json[:data].count).to eq(10)
+      expect(json[:data].count).to eq(11)
       expect(json[:data][0][:attributes][:name]).to eq("Item 11")
       expect(json[:data][1][:attributes][:name]).to eq("Item 18")
       expect(json[:data][2][:attributes][:name]).to eq("Item 5")
@@ -48,6 +48,7 @@ RSpec.describe "Items by revenue", type: :request do
       expect(json[:data][7][:attributes][:name]).to eq("Item 12")
       expect(json[:data][8][:attributes][:name]).to eq("Item 4")
       expect(json[:data][9][:attributes][:name]).to eq("Item 16")
+      expect(json[:data][10][:attributes][:name]).to eq("Item 19")
     end
   end
 
@@ -58,7 +59,7 @@ RSpec.describe "Items by revenue", type: :request do
       get "/api/v1/revenue/items?quantity=#{qty}"
 
       expect(response.status).to eq(200)
-      expect(json[:data].count).to eq(10)
+      expect(json[:data].count).to eq(11)
       expect(json[:data]).to_not include("No Invoices")
     end
   end
