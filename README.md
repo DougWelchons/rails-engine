@@ -92,3 +92,15 @@ testing
     - the endpoint returns a 400 response if the quantity query param is a string
     - the endpoint returns a 400 response if the quantity query param is blank
     - the endpoint returns a 400 response if the quantity query param is not provided
+
+- items_by_revenue endpoint
+  - Happy path testing includes:
+    - the endpoint returns 10 items by default, ordered by revenue
+    - the endpoint returns items equal to the quantity query params if provided
+    - the endpoint returns all items if the quantity query params is larger then the number of merchants
+  - Edge case testing includes:
+    - the endpoint does not includes items that do not have any successful transactions
+  - Sad path testing includes:
+    - the endpoint returns a 400 response if the quantity query param is less then 1
+    - the endpoint returns a 400 response if the quantity query param is a string
+    - the endpoint returns a 400 response if the quantity query param is blank
