@@ -7,8 +7,11 @@ class Api::V1::ItemsController < ApplicationController
   end
 
   def by_revenue
-    item = Item.by_revenue(params[:quantity])
-
-    render json: ItemRevenueSerializer.new(item)
+    if ItemsFacade.valid_param?(params[:quantity]) || !params[:quantity]
+      items = ItemsFacade.by_revenue(params[:quantity])
+      render json: ItemRevenueSerializer.new(items)
+    else
+      render json: {error: {}}, status: :bad_request
+    end
   end
 end
