@@ -15,6 +15,8 @@ This project was tested with:<br>
 * RSpec version 3.10
 </div>
 <div style="content: ""; clear: both; display: table"></div>
+
+
 #### Contents
 - [Database](#database-creation)
 - [Endpoint documentation](#endpoint-documentation)
