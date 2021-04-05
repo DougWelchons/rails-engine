@@ -10,6 +10,7 @@ class Invoice < ApplicationRecord
      joins(:invoice_items)
     .where('invoices.status = ?', 'packaged')
     .select('invoices.id, sum(invoice_items.quantity * invoice_items.unit_price) as potential_revenue')
+    .order(potential_revenue: :desc)
     .group(:id)
     .limit(limit)
   end
