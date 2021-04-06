@@ -55,55 +55,55 @@ RSpec.describe "item find_one API end point", type: :request do
         expect(json[:data][:attributes][:name]).to eq("stuff-n-things")
       end
     end
+  end
 
-    describe "Edge Case" do
-      it "returns no item if the minimum value is greater then all items" do
-        min = 10000
-        get "/api/v1/items/find?min_price=#{min}"
+  describe "Edge Case" do
+    it "returns no item if the minimum value is greater then all items" do
+      min = 10000
+      get "/api/v1/items/find?min_price=#{min}"
 
-        expect(response.status).to eq(200)
-        expect(json[:data].count).to eq(0)
-      end
-
-      it "returns no item if the maximum value is less then all items" do
-        max = 0.10
-        get "/api/v1/items/find?max_price=#{max}"
-
-        expect(response.status).to eq(200)
-        expect(json[:data].count).to eq(0)
-      end
-
-      it "returns no item if the maximum value is less then the minimum value" do
-        min = 25
-        max = 10
-        get "/api/v1/items/find?min_price=#{min}&max_price=#{max}"
-
-        expect(response.status).to eq(200)
-        expect(json[:data].count).to eq(0)
-      end
+      expect(response.status).to eq(200)
+      expect(json[:data].count).to eq(0)
     end
-    describe "Sad Path" do
-      it "returns a 400 response if both a name and price query param are give" do
-        max = 1000.50
-        name = "name"
-        get "/api/v1/items/find?max_price=#{max}&name=#{name}"
 
-        expect(response.status).to eq(400)
-      end
+    it "returns no item if the maximum value is less then all items" do
+      max = 0.10
+      get "/api/v1/items/find?max_price=#{max}"
 
-      it "returns a 400 response if the max price query param is less then 0" do
-        max = -1
-        get "/api/v1/items/find?max_price=#{max}"
+      expect(response.status).to eq(200)
+      expect(json[:data].count).to eq(0)
+    end
+  end
 
-        expect(response.status).to eq(400)
-      end
+  describe "Sad Path" do
+    it "returns a 400 response if the maximum value is less then the minimum value" do
+      min = 25
+      max = 10
+      get "/api/v1/items/find?min_price=#{min}&max_price=#{max}"
 
-      it "returns a 400 response if the min price query param is less then 0" do
-        min = -1
-        get "/api/v1/items/find?min_price=#{min}"
+      expect(response.status).to eq(400)
+    end
 
-        expect(response.status).to eq(400)
-      end
+    it "returns a 400 response if both a name and price query param are give" do
+      max = 1000.50
+      name = "name"
+      get "/api/v1/items/find?max_price=#{max}&name=#{name}"
+
+      expect(response.status).to eq(400)
+    end
+
+    it "returns a 400 response if the max price query param is less then 0" do
+      max = -1
+      get "/api/v1/items/find?max_price=#{max}"
+
+      expect(response.status).to eq(400)
+    end
+
+    it "returns a 400 response if the min price query param is less then 0" do
+      min = -1
+      get "/api/v1/items/find?min_price=#{min}"
+
+      expect(response.status).to eq(400)
     end
   end
 end

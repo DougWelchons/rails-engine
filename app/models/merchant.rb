@@ -5,14 +5,14 @@ class Merchant < ApplicationRecord
   has_many :customers, through: :invoices
   has_many :transactions, through: :invoices
 
-  def self.by_revenue(limit)
-     joins(:transactions)
-    .where('transactions.result = ?', 'success')
-    .select('merchants.id, merchants.name, sum(invoice_items.quantity * invoice_items.unit_price) as revenue')
-    .group(:id)
-    .order(revenue: :desc)
-    .limit(limit)
-  end
+  # def self.by_revenue(limit)
+  #    joins(:transactions)
+  #   .where('transactions.result = ?', 'success')
+  #   .select('merchants.*, sum(invoice_items.quantity * invoice_items.unit_price) as revenue')
+  #   .group(:id)
+  #   .order(revenue: :desc)
+  #   .limit(limit)
+  # end
 
   def self.by_items_sold(limit = 5)
      joins(:transactions)

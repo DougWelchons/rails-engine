@@ -13,10 +13,10 @@ RSpec.describe Invoice, type: :model do
     before :each do
       seed_test_db
     end
-    describe ".unshiped_potential_revenue" do
+    describe ".unshipped_potential_revenue" do
       it "it will return 10 invoices by default" do
         limit = nil
-        invoices = Invoice.unshiped_potential_revenue(limit)
+        invoices = Invoice.unshipped_potential_revenue(limit)
         expect(invoices.length).to eq(10)
         expect(invoices[0].potential_revenue).to eq(20770.0)
         expect(invoices[1].potential_revenue).to eq(4451.0)
@@ -32,7 +32,7 @@ RSpec.describe Invoice, type: :model do
 
       it "if a limit is provided, it will return invoices equal to the limit" do
         limit = 2
-        invoices = Invoice.unshiped_potential_revenue(limit)
+        invoices = Invoice.unshipped_potential_revenue(limit)
 
         expect(invoices.length).to eq(limit)
         expect(invoices[0].potential_revenue).to eq(20770.0)
@@ -41,7 +41,7 @@ RSpec.describe Invoice, type: :model do
 
       it "returns all invoices that have not shipped if limit is greater than the number of results" do
         limit = 50
-        invoices = Invoice.unshiped_potential_revenue(limit)
+        invoices = Invoice.unshipped_potential_revenue(limit)
 
         expect(invoices.length).to eq(11)
         expect(invoices[0].potential_revenue).to eq(20770.0)

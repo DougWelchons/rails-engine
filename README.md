@@ -6,18 +6,13 @@
 Rails engine is designed to simulate the backend portion of a internet sales platform,
 providing to the front end program (not a part of this project), API endpoints to relevant data in the database.
 
-<div style="display: inline-block">
-This project was built with:<br>
+
+This project was built with:
 * Ruby version 2.5.3<br>
 * Rails version 5.2.5
-</div>
 
-<div style="display: inline-block">
-This project was tested with:<br>
+This project was tested with:
 * RSpec version 3.10
-</div>
-<div style="content: ""; clear: both; display: table"></div>
-
 
 #### Contents
 - [Database](#database-creation)
@@ -33,36 +28,86 @@ This project was tested with:<br>
 - [Testing](#testing)
   - [Running tests](#running-tests)
   - [Tests for each endpoint](#tests-for-each-endpont)
-    - [All_items](#all_items-endpoints)
-    - [All_merchants](#all_merchants-endpoints)
+    - [All items](#all-items-endpoints)
+    - [All merchants](#all-merchants-endpoints)
+    - [Find item](find-item-endpoint)
+    - [Find merchants](find-merchants-endpoint)
+    - [Merchants by revenue](merchants-by-revenue-endpoint)
+    - [Merchants by items sold](merchants-by-items-sold-endpoint)
+    - [Items by revenue](items-by-revenue-endpoint)
+    - [Unshipped invoices by revenue](unshipped-invoices-by-revenue)
 
 
-
-* Configuration
-
-* Database creation
-
-In order to run this program locally you will need to create and seed a local database you can do so with `$ rails db:{drop,create,migrate,seed}`, or if you prefer to execute the commands manually one at a time, you can use the following
-
-```
-$ rails db:drop
-$ rails db:create
-$ rails db:migrate
-$ rails db:seed
-```
 
 ### Endpoint Documentation
 ###### All items
-- this endpoint returns a list of 
-###### All merchants
-###### Find item
-###### Find merchants
-###### Merchants by revenue
-###### Merchants by items sold
-###### Items by revenue
-###### Unshipped invoices by potential revenue
+- This endpoint returns a list of items
+  - optional query params:
+    - page=<integer> (must be 1 or greater) default = 1
+    - per_page=<integer> (must be 1 or greater) default = 20
+  - examples:
+    - http://localhost:3000/api/v1/items (returns items 1 - 20 by default)
+    - http://localhost:3000/api/v1/items?page=2&per_page=50 (returns items 51 - 100)
 
-* ...
+###### All merchants
+- This endpoint returns a list of merchants
+  - optional query params:
+    - page=<integer> (must be 1 or greater) default = 1
+    - per_page=<integer> (must be 1 or greater) default = 20
+  - examples:
+    - http://localhost:3000/api/v1/merchants (returns merchants 1 - 20 by default)
+    - http://localhost:3000/api/v1/merchants?page=2&per_page=50 (returns merchants 51 - 100)
+
+###### Find item
+- This endpoint returns the first item (sorted alphabetically) that matches the search params.
+  - At least on of the following params must be included. Additionally you cannot search by price and name.
+    - name=<string>
+    - min_price=<float or integer> (must be 0 or greater)
+    - max_price=<float or integer> (must be 0 or greater)
+  - examples:
+    - http://localhost:3000/api/v1/items/find?name=Merchant (returns a single valid result)
+    - http://localhost:3000/api/v1/items/find?min_price=25 (returns a single valid result)
+    - http://localhost:3000/api/v1/items/find?max_price=25 (returns a single valid result)
+    - http://localhost:3000/api/v1/items/find?min_price=25&max_price=30 (returns a single valid result)
+
+###### Find merchants
+- This endpoint returns all of the merchants (sorted alphabetically) that match the search params.
+  - Required params:
+    - name=<string>
+  - examples:
+    - http://localhost:3000/api/v1/merchants/find_all?name=merchant (returns all valid results)
+
+###### Merchants by revenue
+- This endpoint returns a list of merchants, sorted by total revenue
+  - required params:
+    - quantity=<intiger> (must be 1 or greater)
+  - examples:
+    - http://localhost:3000/api/v1/revenue/merchants?quantity=10 (returns first 10 results)
+
+###### Merchants by items sold
+- This endpoint returns a list of merchants, sorted by total items sold
+  - required params:
+    - quantity=<intiger> (must be 1 or greater)
+  - examples:
+    - http://localhost:3000/api/v1/merchants/most_items?quantity=8 (returns first 8 results)
+
+###### Items by revenue
+- This endpoint returns a list of items, sorted by total items sold
+  - Optional params:
+    - quantity=<intiger> (must be 1 or greater)
+  - examples:
+    - http://localhost:3000/api/v1/revenue/items (returns first 10 results by default)
+    - http://localhost:3000/api/v1/revenue/items?quantity=8 (returns first 8 results)
+
+###### Unshipped invoices by potential revenue
+- This endpoint returns a list of invoices that have not been shipped, sorted by total potential revenue
+  - Optional params:
+    - quantity=<intiger> (must be 1 or greater)
+  - examples:
+    - http://localhost:3000/api/v1/revenue/unshipped (returns first 10 results by default)
+    - http://localhost:3000/api/v1/revenue/unshipped?quantity=8 (returns first 8 results)
+
+
 
 ### Testing
 ##### Running tests
@@ -109,15 +154,19 @@ $ rails db:seed
 - Edge case testing includes:
   - The endpoint returns no item if the minimum value is greater then all items
   - The endpoint returns no item if the maximum value is less then all items
-  - The endpoint returns no item if the maximum value is less then the minimum value
 - Sad path testing includes:
   - The endpoint returns a 400 response if both a name and price query param are give
-  - The endpoint returns a 400 response if min max price query params are less then 0
+  - The endpoint returns a 400 response if the min or max price query params are less then 0
+  - The endpoint returns a 400 response if the maximum value is less then the minimum value
 
 ##### Find_merchants (search) endpoint
 - Happy path testing includes:
   - The endpoint returns all merchants who match the name search params
   - The endpoint returns no objects if no merchants match the name search params
+- Edge case testing includes:
+- Sad path testing includes:
+  - The endpoint returns a 400 response if the name search params is not provided
+  - The endpoint returns a 400 response if the name search params is blank
 
 ##### Merchants_by_revenue endpoint
 - Happy path testing includes:

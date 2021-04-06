@@ -16,7 +16,7 @@ RSpec.describe Merchant, type: :model do
     describe ".by_revenue" do
       it "it will return merchants equal to the limit" do
         limit = 2
-        merchants = Merchant.by_revenue(limit)
+        merchants = Merchant.by_revenue(limit, "merchants")
 
         expect(merchants.length).to eq(limit)
         expect(merchants[0].name).to eq("stand by")
@@ -25,7 +25,7 @@ RSpec.describe Merchant, type: :model do
 
       it "returns all merchants with successful transactions if limit is greater than the number of results" do
         limit = 50
-        merchants = Merchant.by_revenue(limit)
+        merchants = Merchant.by_revenue(limit, "merchants")
 
         expect(merchants.length).to eq(6)
         expect(merchants[0].name).to eq("stand by")
