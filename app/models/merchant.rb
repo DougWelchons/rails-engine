@@ -22,4 +22,9 @@ class Merchant < ApplicationRecord
     .order(item_count: :desc)
     .limit(limit)
   end
+  
+  def self.search_by_name(name)
+    keyword = "%#{name.downcase}%"
+    Merchant.where('lower(name) LIKE ?', keyword)
+  end
 end

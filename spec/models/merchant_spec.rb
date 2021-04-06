@@ -60,5 +60,23 @@ RSpec.describe Merchant, type: :model do
         expect(merchants[5].name).to eq("Merchants 4 me")
       end
     end
+
+    describe ".search_by_name" do
+      it "it will return all merchants that match the keyword" do
+        keyword = "thing"
+        merchants = Merchant.search_by_name(keyword)
+
+        expect(merchants.length).to eq(2)
+        expect(merchants[0].name).to eq("this other thing")
+        expect(merchants[1].name).to eq("Merchants that do the thing")
+      end
+
+      it "returns no objects if no merchants mach the keyword" do
+        keyword = "No Match"
+        merchants = Merchant.search_by_name(keyword)
+
+        expect(merchants.length).to eq(0)
+      end
+    end
   end
 end

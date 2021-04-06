@@ -1,4 +1,5 @@
 class ItemsFacade
+  extend Validatable
 
   def self.all_items(per_page, page)
     page = 1 unless valid_param?(page)
@@ -9,13 +10,6 @@ class ItemsFacade
   end
 
   def self.by_revenue(limit)
-    if self.valid_param?(limit) || !limit
-      Item.by_revenue(limit, "items")
-    end
-  end
-
-  def self.valid_param?(param)
-    return true if (param && param !="") && param.to_i >= 1
-    false
+    Item.by_revenue(limit, "items") if valid_optional_param?(limit)
   end
 end

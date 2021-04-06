@@ -14,4 +14,17 @@ class Item < ApplicationRecord
   #   .order(revenue: :desc)
   #   .limit(limit)
   # end
+
+  def self.search_by_price(min, max)
+     where('unit_price > ?', min)
+    .where('unit_price < ?', max)
+    .order(:name)
+    .limit(1)
+  end
+
+  def self.search_by_name(name)
+     where('lower(name) LIKE ?', name)
+    .order(:name)
+    .limit(1)
+  end
 end
