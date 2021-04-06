@@ -7,11 +7,11 @@ Rails engine is designed to simulate the backend portion of a internet sales pla
 providing to the front end program (not a part of this project), API endpoints to relevant data in the database.
 
 
-This project was built with:<br>
+This project was built with:
 * Ruby version 2.5.3<br>
 * Rails version 5.2.5
 
-This project was tested with:<br>
+This project was tested with:
 * RSpec version 3.10
 
 #### Contents
@@ -28,21 +28,16 @@ This project was tested with:<br>
 - [Testing](#testing)
   - [Running tests](#running-tests)
   - [Tests for each endpoint](#tests-for-each-endpont)
-    - [All items](#all_items-endpoints)
-    - [All merchants](#all_merchants-endpoints)
+    - [All items](#all-items-endpoints)
+    - [All merchants](#all-merchants-endpoints)
+    - [Find item](find-item-endpoint)
+    - [Find merchants](find-merchants-endpoint)
+    - [Merchants by revenue](merchants-by-revenue-endpoint)
+    - [Merchants by items sold](merchants-by-items-sold-endpoint)
+    - [Items by revenue](items-by-revenue-endpoint)
+    - [Unshipped invoices by revenue](unshipped-invoices-by-revenue)
 
-* Configuration
 
-* Database creation
-
-In order to run this program locally you will need to create and seed a local database you can do so with `$ rails db:{drop,create,migrate,seed}`, or if you prefer to execute the commands manually one at a time, you can use the following
-
-```
-$ rails db:drop
-$ rails db:create
-$ rails db:migrate
-$ rails db:seed
-```
 
 ### Endpoint Documentation
 ###### All items
