@@ -77,5 +77,17 @@ RSpec.describe Item, type: :model do
         expect(items[10].name).to eq("Item 19")
       end
     end
+
+    describe ".with_offset" do
+      it "returns the number of items with offset" do
+        offset = 5
+        per_page = 2
+        items = Item.with_offset(offset, per_page)
+
+        expect(items.count).to eq(2)
+        expect(items.first.name).to eq("item-that-does things")
+        expect(items.second.name).to eq("Item 7")
+      end
+    end
   end
 end

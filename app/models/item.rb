@@ -27,4 +27,8 @@ class Item < ApplicationRecord
     .order(:name)
     .limit(1)
   end
+
+  def self.with_offset(offset, per_page)
+    offset(offset).limit(per_page)
+  end
 end
