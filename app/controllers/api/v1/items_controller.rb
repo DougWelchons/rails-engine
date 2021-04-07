@@ -7,7 +7,7 @@ class Api::V1::ItemsController < ApplicationController
 
   def by_revenue
     items = ItemsFacade.by_revenue(params[:quantity])
-    return render json: {error: {}}, status: :bad_request unless items
+    return error("quantity must be greater then 0") unless items
     render json: ItemRevenueSerializer.new(items)
   end
 end

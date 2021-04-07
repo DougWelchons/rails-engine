@@ -5,6 +5,15 @@ class Merchant < ApplicationRecord
   has_many :customers, through: :invoices
   has_many :transactions, through: :invoices
 
+  def self.by_items_sold(limit = 5)
+    joins(:transactions)
+    .where('transactions.result = ?', 'success')
+    .select('merchants.id, merchants.name, sum(invoice_items.quantity) AS item_count')
+    .group(:id)
+    .order(item_count: :desc)
+    .limit(limit)
+  end
+
   # def self.by_revenue(limit)
   #    joins(:transactions)
   #   .where('transactions.result = ?', 'success')
@@ -14,17 +23,13 @@ class Merchant < ApplicationRecord
   #   .limit(limit)
   # end
 
-  def self.by_items_sold(limit = 5)
-     joins(:transactions)
-    .where('transactions.result = ?', 'success')
-    .select('merchants.id, merchants.name, sum(invoice_items.quantity) AS item_count')
-    .group(:id)
-    .order(item_count: :desc)
-    .limit(limit)
-  end
-  
-  def self.search_by_name(name)
-    keyword = "%#{name.downcase}%"
-    Merchant.where('lower(name) LIKE ?', keyword)
-  end
+  # def self.with_offset(offset, per_page)
+  #   offset(offset).limit(per_page)
+  # end
+
+  # def self.search_by_name(name)
+  #   keyword = "%#{name.downcase}%"
+  #   where('lower(name) LIKE ?', keyword)
+  #   .order(:name)
+  # end
 end

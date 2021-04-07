@@ -2,7 +2,7 @@ class Item::SearchFacade
   extend Validatable
 
   def self.find_item(name, min, max)
-    if valid_search?(name, min, max)
+    if valid_search_params?(name, min, max)
       if min || max
         min = 0 unless min
         max = 1000000000000 unless max
@@ -10,8 +10,7 @@ class Item::SearchFacade
         Item.search_by_price(min, max)
 
       elsif name
-        keyword = "%#{name.downcase}%"
-        Item.search_by_name(keyword)
+        Item.search_by_name(name)
       end
     end
   end

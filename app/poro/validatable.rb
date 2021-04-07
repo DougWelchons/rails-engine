@@ -10,7 +10,7 @@ module Validatable
     false
   end
 
-  def valid_search?(name, min, max)
+  def valid_search_params?(name, min, max)
     return false if name && (min || max)
     return false if max && min.to_f > max.to_f
     return true if all_optional_params_are_valid?([name, min, max]) &&

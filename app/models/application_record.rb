@@ -10,4 +10,14 @@ class ApplicationRecord < ActiveRecord::Base
     .order(revenue: :desc)
     .limit(limit)
   end
+
+  def self.with_offset(offset, per_page)
+    offset(offset).limit(per_page)
+  end
+
+  def self.search_by_name(name)
+    keyword = "%#{name.downcase}%"
+    where('lower(name) LIKE ?', keyword)
+    .order(:name)
+  end
 end

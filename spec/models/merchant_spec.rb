@@ -67,8 +67,8 @@ RSpec.describe Merchant, type: :model do
         merchants = Merchant.search_by_name(keyword)
 
         expect(merchants.length).to eq(2)
-        expect(merchants[0].name).to eq("this other thing")
-        expect(merchants[1].name).to eq("Merchants that do the thing")
+        expect(merchants[0].name).to eq("Merchants that do the thing")
+        expect(merchants[1].name).to eq("this other thing")
       end
 
       it "returns no objects if no merchants mach the keyword" do
@@ -76,6 +76,18 @@ RSpec.describe Merchant, type: :model do
         merchants = Merchant.search_by_name(keyword)
 
         expect(merchants.length).to eq(0)
+      end
+    end
+
+    describe ".with_offset" do
+      it "returns the number of merchants with offset" do
+        offset = 5
+        per_page = 2
+        merchants = Merchant.with_offset(offset, per_page)
+
+        expect(merchants.count).to eq(2)
+        expect(merchants.first.name).to eq("the merchants for all")
+        expect(merchants.second.name).to eq("the merchants guild")
       end
     end
   end
