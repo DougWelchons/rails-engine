@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe "all merchants API end point", type: :request do
   before :each do
-    @merchants = create_list(:merchant, 100)
+    seed_test_db
   end
 
   describe "Happy Path" do
@@ -12,8 +12,8 @@ RSpec.describe "all merchants API end point", type: :request do
 
       expect(response.status).to eq(200)
       expect(json[:data].count).to eq(per_page)
-      expect(json[:data].first[:id].to_i).to eq(@merchants.first.id)
-      expect(json[:data].last[:id].to_i).to eq(@merchants[per_page - 1].id)
+      expect(json[:data].first[:id].to_i).to eq(@merchant1.id)
+      expect(json[:data].last[:id].to_i).to eq(@merchant10.id)
     end
 
     it "returens 20 merchants by default" do
@@ -22,8 +22,8 @@ RSpec.describe "all merchants API end point", type: :request do
 
       expect(response.status).to eq(200)
       expect(parsed[:data].count).to eq(20)
-      expect(json[:data].first[:id].to_i).to eq(@merchants.first.id)
-      expect(json[:data].last[:id].to_i).to eq(@merchants[19].id)
+      expect(json[:data].first[:id].to_i).to eq(@merchant1.id)
+      expect(json[:data].last[:id].to_i).to eq(@merchant20.id)
     end
 
     it "returens the next 20 merchants if page 2 is requested" do
@@ -32,9 +32,9 @@ RSpec.describe "all merchants API end point", type: :request do
       parsed = JSON.parse(response.body, symbolize_names: true)
 
       expect(response.status).to eq(200)
-      expect(parsed[:data].count).to eq(20)
-      expect(json[:data].first[:id].to_i).to eq(@merchants[20].id)
-      expect(json[:data].last[:id].to_i).to eq(@merchants[39].id)
+      expect(parsed[:data].count).to eq(5)
+      expect(json[:data].first[:id].to_i).to eq(@merchant21.id)
+      expect(json[:data].last[:id].to_i).to eq(@merchant25.id)
     end
 
     it "returens the next 10 merchants if page 2 & 10 merchants_per_page is requested" do
@@ -45,8 +45,8 @@ RSpec.describe "all merchants API end point", type: :request do
 
       expect(response.status).to eq(200)
       expect(parsed[:data].count).to eq(10)
-      expect(json[:data].first[:id].to_i).to eq(@merchants[10].id)
-      expect(json[:data].last[:id].to_i).to eq(@merchants[19].id)
+      expect(json[:data].first[:id].to_i).to eq(@merchant11.id)
+      expect(json[:data].last[:id].to_i).to eq(@merchant20.id)
     end
   end
 
@@ -56,18 +56,18 @@ RSpec.describe "all merchants API end point", type: :request do
       get "/api/v1/merchants?per_page=#{per_page}"
 
       expect(response.status).to eq(200)
-      expect(json[:data].count).to eq(100)
+      expect(json[:data].count).to eq(25)
     end
 
     it "returns all remaing merchants if page_count is the last page" do
-      per_page = 30
-      page = 4
+      per_page = 10
+      page = 3
       get "/api/v1/merchants?per_page=#{per_page}&page=#{page}"
 
       expect(response.status).to eq(200)
-      expect(json[:data].count).to eq(10)
-      expect(json[:data].first[:id].to_i).to eq(@merchants[90].id)
-      expect(json[:data].last[:id].to_i).to eq(@merchants[99].id)
+      expect(json[:data].count).to eq(5)
+      expect(json[:data].first[:id].to_i).to eq(@merchant21.id)
+      expect(json[:data].last[:id].to_i).to eq(@merchant25.id)
     end
 
     it "returns an no objects if page count is too high" do
@@ -88,8 +88,8 @@ RSpec.describe "all merchants API end point", type: :request do
 
       expect(response.status).to eq(200)
       expect(json[:data].count).to eq(per_page)
-      expect(json[:data].first[:id].to_i).to eq(@merchants.first.id)
-      expect(json[:data].last[:id].to_i).to eq(@merchants[per_page - 1].id)
+      expect(json[:data].first[:id].to_i).to eq(@merchant1.id)
+      expect(json[:data].last[:id].to_i).to eq(@merchant10.id)
     end
 
     it "returns 20 merchants per page if query param for per_page is less then 1" do
@@ -99,8 +99,8 @@ RSpec.describe "all merchants API end point", type: :request do
 
       expect(response.status).to eq(200)
       expect(json[:data].count).to eq(20)
-      expect(json[:data].first[:id].to_i).to eq(@merchants.first.id)
-      expect(json[:data].last[:id].to_i).to eq(@merchants[19].id)
+      expect(json[:data].first[:id].to_i).to eq(@merchant1.id)
+      expect(json[:data].last[:id].to_i).to eq(@merchant20.id)
     end
 
     it "returns the default if query params are blank" do
@@ -108,8 +108,8 @@ RSpec.describe "all merchants API end point", type: :request do
 
       expect(response.status).to eq(200)
       expect(json[:data].count).to eq(20)
-      expect(json[:data].first[:id].to_i).to eq(@merchants.first.id)
-      expect(json[:data].last[:id].to_i).to eq(@merchants[19].id)
+      expect(json[:data].first[:id].to_i).to eq(@merchant1.id)
+      expect(json[:data].last[:id].to_i).to eq(@merchant20.id)
     end
   end
 end

@@ -12,23 +12,13 @@ class Item < ApplicationRecord
     .limit(1)
   end
 
-  # def self.by_revenue(limit)
-  #   limit = 10 unless limit
-  #    joins(:transactions)
-  #   .where('transactions.result = ?', 'success')
-  #   .select('items.*, sum(invoice_items.quantity * invoice_items.unit_price) AS revenue')
-  #   .group(:id)
-  #   .order(revenue: :desc)
-  #   .limit(limit)
-  # end
-
-  # def self.with_offset(offset, per_page)
-  #   offset(offset).limit(per_page)
-  # end
-
-  # def self.search_by_name(name)
-  #    where('lower(name) LIKE ?', name)
-  #   .order(:name)
-  #   .limit(1)
-  # end
+  def self.by_revenue(limit)
+    limit = 10 unless limit
+     joins(:transactions)
+    .where('transactions.result = ?', 'success')
+    .select('items.*, sum(invoice_items.quantity * invoice_items.unit_price) AS revenue')
+    .group(:id)
+    .order(revenue: :desc)
+    .limit(limit)
+  end
 end
