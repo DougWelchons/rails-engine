@@ -15,7 +15,7 @@ This project was tested with:
 * RSpec version 3.10
 
 #### Contents
-- [Database](#database-creation)
+- [program setup](#program-setup)
 - [Endpoint documentation](#endpoint-documentation)
   - [All items](#all-items)
   - [All merchants](#all-merchants)
@@ -37,7 +37,22 @@ This project was tested with:
     - [Items by revenue](items-by-revenue-endpoint)
     - [Unshipped invoices by revenue](unshipped-invoices-by-revenue)
 
+### program setup
+To run the program on you own machine follow these setup steps:
+```
+$ git clone "repo URL"
+$ cd rails-engine
+$ bundle install
+```
 
+In order to set up the database run the following:
+```
+$ rails db:create
+$ rails db:migrate
+$ rails db:seed
+```
+If you have an existing database called `rails-engine` you will have to run `rails db:drop` prior to setting up the database
+alternatively you can run `rails db:{drop,create,migrate,seed}` to set up the database.
 
 ### Endpoint Documentation
 ###### All items
